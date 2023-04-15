@@ -1,19 +1,12 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthenticatedSessionController;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+Route::get('/ping', fn () => response(["message" => "pong @". Carbon::now() . "UTC"]));
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::controller(AuthenticatedSessionController::class)->group(function () {
+    Route::post('/auth/login', 'store');
+    Route::post('/auth/verify', 'update');
 });

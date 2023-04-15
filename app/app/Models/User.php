@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasUlids;
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +20,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
+        'mobile',
         'password',
     ];
 
@@ -32,4 +33,17 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function routeNotificationForTwilio()
+    {
+        return $this->mobile;
+    }
+
+    public function driver() {
+        return $this->hasOne(Driver::class);
+    }
+
+    public function trips() {
+        return $this->hasMany(Trip::class);
+    }
 }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('trips', function (Blueprint $table) {
-            $table->ulid();
+            $table->ulid('id');
             $table->foreignUlid('user_id');
             $table->foreignUlid('driver_id');
             $table->boolean('is_started')->default(false);
