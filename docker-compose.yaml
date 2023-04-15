@@ -6,7 +6,7 @@ networks:
 services:
   nginx:
     image: nginx:stable-alpine
-    container_name: webserver
+    container_name: appserver
     ports:
       - '8088:80'
     volumes:
@@ -20,7 +20,7 @@ services:
 
   mysql:
     image: mysql:5.7.22
-    container_name: database
+    container_name: db
     restart: unless-stopped
     tty: true
     ports:
@@ -41,7 +41,7 @@ services:
     build:
       context: ./php
       dockerfile: Dockerfile
-    container_name: php
+    container_name: php-fpm
     volumes:
       - ./app:/var/www/html
     ports:
