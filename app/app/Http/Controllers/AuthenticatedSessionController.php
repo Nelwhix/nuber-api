@@ -52,6 +52,11 @@ class AuthenticatedSessionController extends Controller
             'login_code' => null
         ]);
 
-        return $user->createToken('token')->plainTextToken;
+        $token = $user->createToken('nuber_token')->plainTextToken;
+
+        return response()->json([
+           'message' => 'successful',
+           'token' => $token
+        ]);
     }
 }
