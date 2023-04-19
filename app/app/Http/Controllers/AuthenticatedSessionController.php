@@ -38,14 +38,18 @@ class AuthenticatedSessionController extends Controller
             'code' => 'required|numeric|between:111111,999999'
         ]);
 
-        $user = User::where('mobile', $request->mobile)
-            ->where('login_code', $request->code)
-            ->first();
+        $user = User::where('mobile', $request->mobile)->first();
 
         if (!$user) {
             return response()->json([
                 'message' => 'User not found'
             ], Response::HTTP_NOT_FOUND);
+        }
+
+        if ($user->login_code !== $request->code) {
+            return response()->json([
+               'message' => 'Invalid verification code'
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $user->update([
