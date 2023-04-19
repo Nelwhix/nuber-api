@@ -46,7 +46,7 @@ class AuthenticatedSessionController extends Controller
             ], Response::HTTP_NOT_FOUND);
         }
 
-        if ($user->login_code !== $request->code) {
+        if ($user->login_code != $request->code) {
             return response()->json([
                'message' => 'Invalid verification code'
             ], Response::HTTP_UNPROCESSABLE_ENTITY);

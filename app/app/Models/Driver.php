@@ -11,7 +11,11 @@ class Driver extends Model
     use HasFactory, HasUlids;
 
     protected $fillable = [
-
+        'year',
+        'make',
+        'model',
+        'color',
+        'license_plate'
     ];
 
     public function user() {
