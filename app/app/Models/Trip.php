@@ -10,6 +10,15 @@ class Trip extends Model
 {
     use HasFactory, HasUlids;
 
+    protected $fillable = [
+        'origin',
+        'destination',
+        'destination_name',
+        'driver_location',
+        'is_started',
+        'is_complete'
+    ];
+
     public function user() {
         return $this->belongsTo(User::class);
     }
