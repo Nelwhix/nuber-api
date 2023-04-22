@@ -19,6 +19,11 @@ class Trip extends Model
         'is_complete'
     ];
 
+    protected $casts = [
+      'origin' => 'array',
+      'destination' => 'array'
+    ];
+
     public function user() {
         return $this->belongsTo(User::class);
     }
