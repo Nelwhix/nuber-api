@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\LocationUpdated;
+use App\Events\TripAccepted;
+use App\Events\TripEnded;
+use App\Events\TripStarted;
 use App\Models\Trip;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -90,6 +94,8 @@ class TripController extends Controller
 
         $trip->load('driver.user');
 
+        TripAccepted::dispatch($trip, $request->user());
+
         return response()->json([
            'message' => 'successful',
            'trip' => $trip
@@ -104,6 +110,8 @@ class TripController extends Controller
 
         $trip->load('driver.user');
 
+        TripStarted::dispatch($trip, $request->user());
+
         return response()->json([
             'message' => 'successful',
             'trip' => $trip
@@ -117,6 +125,8 @@ class TripController extends Controller
         ]);
 
         $trip->load('driver.user');
+
+        TripEnded::dispatch($trip, $request->user());
 
         return response()->json([
             'message' => 'successful',
@@ -133,6 +143,8 @@ class TripController extends Controller
         $trip->update([
             'driver_location' => $request->driver_location
         ]);
+
+        LocationUpdated::dispatch($trip, $request->user());
 
         return response()->json([
             'message' => 'successful',
